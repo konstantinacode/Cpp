@@ -6,7 +6,7 @@
 using namespace std;
 
 // Forward Declaration
-
+void pass_by_val_ref_and_ptr_demo();
 
 ///////////////////////////////////////
 // Main Function -- code entry point //
@@ -35,7 +35,7 @@ int main (int argc, char *argv[]) {
 	 *			  Pass by Reference
 	 *			  Pass by Pointer
 	 */
-	//pass_by_val_ref_and_ptr_demo();
+	pass_by_val_ref_and_ptr_demo();
 
 	/* 
 	 * Example of Arrays and Pointers
@@ -62,15 +62,27 @@ void swap1(int , int ){
 }
 
 //Variables are passed by POINTER
-void swap2(int, int){
+void swap1(int a, int b){
 	// Fill the missing code
-	
+	int tmp = a;
+	a = b;
+	b = tmp;
+}
+
+//Variables are passed by POINTER
+void swap2(int* a, int* b){
+	// Fill the missing code
+	int tmp = *a;
+	*a = *b;
+	*b = tmp;
 }
 
 //Variables are passed by REFERENCE
-void swap3(int, int){
+void swap3(int& a, int& b){
 	// Fill the missing code
-	
+	int tmp = a;
+	a = b;
+	b = tmp;
 }
 
 
@@ -80,17 +92,16 @@ void pass_by_val_ref_and_ptr_demo () {
 	cout << "Initial Values\n";
 	cout << "x = " << x << " | y = " << y << endl;
 	
-	swap1();
+	swap1(x, y);
 	cout << "\nAfter Pass-By-Value Swap\n";
 	cout << "x = " << x << " | y = " << y << endl;
 	
 	// In order to pass by pointer we have to use the address of the variable by using "&"
-	swap2();
+	swap2(&x, &y);
 	cout << "\nAfter Pass-By-Pointer Swap\n";
 	cout << "x = " << x << " | y = " << y << endl;
 	
-	swap3();
+	swap3(x,y);
 	cout << "\nAfter Pass-By-Reference Swap\n";
 	cout << "x = " << x << " | y = " << y << endl;
 }
-
