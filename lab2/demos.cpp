@@ -31,16 +31,24 @@ void arrays_and_pointers_demo () {
 	intPointer = intArray;
 	
 	cout << "The array has the following values: \n";
-		// Fill the missing code: print array 
+	for ( int i=0; i<4; i++ ) {
+		cout << intArray[i] << endl;
+	}
 
 	cout << "\nI can access the same values using the pointer: \n";
-	// Fill the missing code: print array using intPointer
+	for ( int i=0; i<4; i++ ) {
+		cout << intPointer[i] << endl;
+	}
 		
 	cout<<"\nI can also update the values using the pointer: (writing zero)\n";
-	// Fill the missing code: Update array with 0 using intPointer
+	for ( int i=0; i<4; i++ ) {
+		intPointer[i] = 0;
+	}
 
 	cout<<"\nThe values on the array are now : \n";
-	// Fill the missing code: print array 
+	for ( int i=0; i<4; i++ ) {
+		cout << intArray[i] << endl;
+	}
 
 
 	// Finally a 2D array
@@ -50,18 +58,31 @@ void arrays_and_pointers_demo () {
 							 {11, 18, 14} };
 
 	// Init the array
-	// Fill the missing code: Update array with i*4 + j 
-	
+	for (int i=0; i<4; i++) {
+		for (int j=0; j<3; j++) {
+			twoDimArray[i][j] = i*4 + j;
+		}
+	}
 
 	cout << "Press ENTER to continue to 2D arrays" << endl;
 	system ("PAUSE");
 
 	cout << "\nThe 2D array has the following values: \n";
-	// Fill the missing code: print array using for-loops
-	
+	// Fill the missing code (Using for-loops)
+	for (int i=0; i<4; i++) {
+		for (int j=0; j<3; j++) {
+			cout << twoDimArray[i][j] << " ";
+		}
+		cout << endl;
+	}
 
 	cout << "\nAnd now access the 2D array using a pointer: \n";
-	// Fill the missing code: print array using for-loops and a pointer
+	intPointer = &twoDimArray[0][0];
+	for (int i=0; i<4; i++) {
+		for (int j=0; j<3; j++) {
+			cout << intPointer[i*3+j] << endl;
+		}
+	}
 		
 }
 
@@ -73,10 +94,13 @@ void dynamic_memory_management_demo () {
 	bool validInput = false;
 	cout << "Type the size of array to allocate :: ";
 	do {
-		// Fill the missing code: read from input until the value you read is an integer
+		cin >> input;
+
+		if ( !(validInput = isDigit(input)) ) {
+			printf ("%s is not a number! Try again.\n", input.c_str());
+		}
 		
 	} while ( !validInput );
-
 	size = atoi(input.c_str());
 	
 	/*
@@ -84,20 +108,20 @@ void dynamic_memory_management_demo () {
 	 * 
 	 * Allocates a new array of integers with the requested size using "new"
 	 */
+	int* dyn_array=new int[size];
 	
-	// Fill the missing code: Create dyn_array with the requested size using "new" 
-	
-	
-	// Fill the missing code: Initialize dyn_array with some values
+	// Fill with some values
+	for (int i=0;i<size;i++)
+		dyn_array[i]=i*i;
 		
 	cout << " C++ Dynamic Array Values :: \n";
-	// Fill the missing code: Print dyn_array
-
+	for (int i=0;i<size;i++) {
+		cout<<dyn_array[i]<<endl;	
+	}
 	
 	// Do not forget to release memory (Dynamic Allocated memory is not released by itself :) )
 	// dyn_array is an array so YOU HAVE TO USE delete []
-	
-	// Fill the missing code: Delete dyn_array using delete
+	delete []dyn_array;
 
 	/*
 	 * The C way -- malloc & free
@@ -109,19 +133,19 @@ void dynamic_memory_management_demo () {
 	//	-- the expected argument is the size of memory we want to allocate in bytes
 	//	-- (int *)malloc(4) would allocate 4 bytes --> 1 int !
 	//	-- instead of remembering the size of types we use sizeof(type) * times the number we want
+	dyn_array = (int *)malloc(sizeof(int)*size);
 	
-	// Fill the missing code: Create dyn_array with the requested size using malloc 
-
-
-	// Fill the missing code: Initialize dyn_array with some values
+	// Fill with some values
+	for (int i=0;i<size;i++)
+		dyn_array[i]=i*i;
 		
 	cout << "\n C Dynamic Array Values :: \n";
-	
-	// Fill the missing code: Print dyn_array
+	for (int i=0;i<size;i++) {
+		cout<<dyn_array[i]<<endl;	
+	}
 	
 	// Do not forget to release memory (Dynamic Allocated memory is not released by itself :) )
-	
-	// Fill the missing code: Release memory using  free
+	free(dyn_array);
 
 	// ATTENTION -- Never mix "new" with "free" and "malloc" with "delete"
 }
@@ -138,7 +162,24 @@ void vector_demo () {
 	string readString;
 	cout << "Write some words (To stop write: END)" << endl;
 	do {
-		// Fill the missing code: read strings from input and put them to vector until you read the word END
+		// Standard input stream.
+		// It corresponds to the C stream stdin.
+		// We can use it to read input from keyboard.
+		// Using the >> operator we can retreive formatted data (in our example string)
+		// Declared in <iostream>
+		cin >> readString;
+		//cout << "READ :: " << readString << endl;
+
+		// String comparison. Note that string comparisons are Case Sensitive
+		if ( readString.compare("END") != 0 ) {
+			// Add item to vector
+			words.push_back(readString);
+		}
+		else {
+			// Stop do while
+			finished = true;
+		}
+		//cout << "\tVector Capacity :: " << words.capacity() << endl;
 	} while ( !finished );
 
 	printStringVector(words);
