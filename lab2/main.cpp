@@ -56,14 +56,7 @@ int main (int argc, char *argv[]) {
 // No need to Forward Declare these functions as they are called after their definition
 
 //Variables are passed by VALUE
-void swap1(int , int ){
-	// Fill the missing code
-
-}
-
-//Variables are passed by POINTER
 void swap1(int a, int b){
-	// Fill the missing code
 	int tmp = a;
 	a = b;
 	b = tmp;
@@ -72,6 +65,8 @@ void swap1(int a, int b){
 //Variables are passed by POINTER
 void swap2(int* a, int* b){
 	// Fill the missing code
+	// HINT in order to access the value "pointed" by the pointer
+	//      we have to dereference using "*"
 	int tmp = *a;
 	*a = *b;
 	*b = tmp;
@@ -85,19 +80,20 @@ void swap3(int& a, int& b){
 	b = tmp;
 }
 
-
+// This one needs to be Forward Declared as it is called by main which is 
+// on top of this file
 void pass_by_val_ref_and_ptr_demo () {
 	int x = 3;
 	int y = 6;
 	cout << "Initial Values\n";
 	cout << "x = " << x << " | y = " << y << endl;
 	
-	swap1(x, y);
+	swap1(x,y);
 	cout << "\nAfter Pass-By-Value Swap\n";
 	cout << "x = " << x << " | y = " << y << endl;
 	
 	// In order to pass by pointer we have to use the address of the variable by using "&"
-	swap2(&x, &y);
+	swap2(&x,&y);
 	cout << "\nAfter Pass-By-Pointer Swap\n";
 	cout << "x = " << x << " | y = " << y << endl;
 	
@@ -105,3 +101,4 @@ void pass_by_val_ref_and_ptr_demo () {
 	cout << "\nAfter Pass-By-Reference Swap\n";
 	cout << "x = " << x << " | y = " << y << endl;
 }
+
