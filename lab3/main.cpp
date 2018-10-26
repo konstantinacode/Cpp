@@ -6,9 +6,9 @@
 
 using namespace std;
 
-//#define STANDARD_IO
+#define STANDARD_IO
 //#define STRINGS
-#define SIMPLE_FILE_EXAMPLES
+//#define SIMPLE_FILE_EXAMPLES
 
 int main (int argc, char *argv[]) {
 #ifdef STANDARD_IO
@@ -49,7 +49,7 @@ int main (int argc, char *argv[]) {
 	system("PAUSE");
 #elif defined SIMPLE_FILE_EXAMPLES
 	simpleFileWriteExample ();
-	simpleReadExample ("testAsciiFile.txt");
+	//simpleReadExample ("testAsciiFile.txt");
 	//readWriteBinaryExample ();
 	system("PAUSE");
 #else
