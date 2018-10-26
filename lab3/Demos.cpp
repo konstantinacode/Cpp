@@ -10,7 +10,7 @@
 #include "Utils.h"
 
 using namespace std;
-/*
+
 void string_examples ( void ) {
 	// For an extented set of examples with std::strings check this URL http://anaturb.net/C/string_exapm.htm
 	char *line = "Some text";
@@ -51,7 +51,9 @@ void string_examples ( void ) {
 	string s6("Hello World");
 	string::iterator it;
 	cout << "s6 char-by-char: " << endl;
-	// TODO: use the iterator to print the characters of the string
+	for (it=s6.begin(); it!=s6.end(); ++it) {
+		cout << *it << endl;
+	}
 
 	// Get the const char * from a string
 	const char *buf = s6.c_str();	// or .data()
@@ -70,14 +72,10 @@ void string_examples ( void ) {
 	// Find last occurence of sub string
 	cout << "Location of last \"And\" in s5 (" << s5 << ") is :: " << s5.rfind("And") << endl;
 
-	// TODO Now try string.find(string s) and see the difference
-
 	// Get the substring of a string
-	// substr member function returns the substring of a string
-	// string.substr(size_t pos = 0, size_t len = npos) const;
-	// TODO: use substr to get the substring of s5 from the last "And" to the end of it and show it on console
+	cout << "Text from last \"And\" in s5 to the end is :: " << s5.substr(s5.rfind("And")) << endl;
 }
-*/
+
 void simpleFileWriteExample ( void ) {
 	// Creates an instance of ofstream, and opens example.txt (in ASCII (Text) Mode)
 	cout << "Opening ofstream_ascii_example.txt file for writing...\n";
@@ -110,51 +108,52 @@ void simpleFileWriteExample ( void ) {
 	 * close		:: closes the file
 	 */
 
-	//δημιουργούμαι ένα ρεύμα αρχείου που θα γράφει στο αρχείο
-	//ofstream μόνο για γράψιμο, αν δεν το βρει το φτιάχνει
-	ofstream oFile("ofstream_ascii_example.txt");
-
-	//The file could not be opened
-	if (!oFile.is_open()) {
-		printf("Could not open ofstream_ascii_example.txt!\n");
+	//
+	ofstream oFile ("ofstream_ascii_example.txt");
+	
+	// The file could not be opened
+	if ( !oFile.is_open() ) {
+		printf ("Could not open ofstream_ascii_example.txt!\n");
 		return;
 	}
-	//Safely use the file stream
+	// Safely use the file stream
 	else {
-		//Outputs to example.txt trough a_file
-		string text("Output some text to the file\n\n");
+		// Outputs to example.txt through a_file
+		string text ("Output some text to the file\n\n");
 		cout << "Writing text to file\n";
 		oFile << text;
-
-		//Now lets output some int values
+		
+		// Now lets output some int values
 		cout << "Writing int values to file\n";
-		for (int i = 0; i < 10; i++) {
-			oFile << i << endl;
+		for (int i=0; i<10; i++) {
+			oFile << i*i << endl;
 		}
 		oFile << "\n";
 
-		//And some doubles with different precissions;
+		// And some doubles with different precissions;
 		double PI = 3.1415926536;
 		cout << "Writing double values to file\n";
-		for (int i = 0; i < 11; i++) {
-			//setprecission is defined in <iosmanip>
-			oFile << setprecision(11 - i) << PI << endl;
+		for (int i=0; i<11; i++) {
+			// setprecission is defined in <iomanip>
+			oFile << setprecision(11-i) << PI << endl;		// Check the rounding that occurs
 		}
 		oFile << endl;
 
-		//Go to the first line in the file and write
-		oFile.seekp(0, ios_base::beg);
-		oFile << "Surname Name\n";
-		//cout << "Don't forget to close file!\n";
-		//Close the file stream explicitly
+		// TODO :: Go to the first line in the file and write your name -- See what happens
+		oFile.seekp(0,ios_base::beg);
+		oFile << "Anthousis Andreadis\n";
+
+		cout << "Don't forget to close file!\n";
+		// Close the file stream explicitly
 		oFile.close();
 	}
-
-	//Now lets append some values in the file
+	
+	// Now lets append some values in the file
+	// WARNING When you open a file with ios::app YOU CAN ONLY WRITE AT THE END OF IT
+	cout << "Now we re-open the same file BUT in order to append something\n";
 	oFile.open("ofstream_ascii_example.txt", ios::app);
 	oFile << endl << "Appended String!" << endl;
 	oFile.close();
-	
 }
 
 void simpleReadExample ( const char *fName ) {
@@ -192,72 +191,133 @@ void simpleReadExample ( const char *fName ) {
      * close			:: closes the file
 	 */
 
-	// Example of reading data from ASCII file
-	ifstream iFile(fName);
-	string text;
-	string x;
-	float y;
 
-	//>> to string will return characters until the next 
+	// Example of reading data from ASCII file
+	ifstream iFile (fName);
+	string text;
+	int x;
+	float y;
+	// >> to string will return characters until the next space ' ' or '\n' character so be careful!
 	iFile >> text >> x >> y;
 	cout << "Read from iFile::\n" << text << " " << x << " " << y << endl;
+	
+	// TODO :: now go back and read the line in a single buffer
+	iFile.clear();
+	iFile.seekg(0,ios_base::beg);
+
 
 	iFile.close();
-	
 }
 
 void readWriteBinaryExample ( void ) {
-	fstream file("binaryReadWriteExample.txt",ios::out | ios::in | ios::binary);
+	fstream file("binaryReadWriteExample.txt", ios::out | ios::in | ios::binary );
 
-	if (!file.is_open()) {
-		printf("Could not open binaryReadWriteExample.txt!\n");
+	if ( !file.is_open() ) {
+		printf ("Could not open binaryReadWriteExample.txt!\n");
 		return;
 	}
+
 	string text = "CUSTOM HEADER FILE\n";
-	file.write(text.c_str(), text.size());
+	file.write (text.c_str(), text.size());
 
-	int numOfInts;
-	cout << "Give an int\n";
-	cin >> numOfInts;
+	int numOfInts = readPosInt();
+	//int numOfInts;
+	//cout << "Give an int\n";
+	//cin >> numOfInts;
 	cout << "Computing and storing factorial of 0-to-" << numOfInts << endl;
-
-	file.write((char *)&numOfInts, sizeof(int));
-
+	// Initially write the number of int values we should expect to read
+	file.write ((char *)&numOfInts, sizeof(int));
+	// Now write the numOfInts values in file
 	for (int i = 0; i < numOfInts; i++) {
-		int val = (i*i);
-		file.write((char *)&val, sizeof(int));
+		cout << "Computing factorial of " << i << endl;
+		int val = factorial(i+1);
+		file.write ((char *)&val, sizeof(int));
 	}
 
-	//Make sure everything passed into the file
+	// Make sure everything passed into the file
 	file.flush();
 
-	//Now go back to start of file and lets read it
+	// Now go back to start of file and lets read it
 	file.clear();
 	file.seekg(0, ios_base::beg);
 
 	const int bufSize = 64;
 	char buf[bufSize];
-	file.getline(buf, bufSize);
+	file.getline(buf,bufSize);
 
-	if (_stricmp(buf, "CUSTOM HEADER FILE") == 0) { //συγκρίνει δύο string μεταξύ τους
+	if (stricmp(buf,"CUSTOM HEADER FILE") == 0) {
 		cout << "This is a file of our own custom format!\n";
 
+		// Read how many values we expect to read
 		int numVals;
-		file.read((char *)&numVals, sizeof(int));
+		file.read((char *)&numVals,sizeof(int));
 		cout << "File contains " << numVals << " integers\n";
 
-		int *valsArray = new int[numVals];
-		file.read((char *)valsArray, sizeof(int)*numVals);
+		// Allocate an array of appropriate size
+		int *valsArray = new int [numVals];
+		// With one read command read all values!
+		file.read((char *)valsArray,sizeof(int)*numVals);
 
+		// Now print the values
 		for (int i = 0; i < numOfInts; i++) {
 			cout << "Value " << i << " is :: " << valsArray[i] << endl;
 		}
 
-		delete[]valsArray;
+		delete []valsArray;
 	}
+
+	file.close();
 }
-/*
-int readInputFile (char *inputFile, vector<string> vContainer) {
-	
+
+int readInputFile (char *inputFile, vector<string> &vContainer, set<string> &sContainer) {
+	ifstream inFStream (inputFile);
+	if ( !inFStream.is_open() ){
+		cout <<"Cannot open input file\n";
+		return 0;
+	}
+
+	// Just a string to store read data
+	string line;
+
+	// A simple way to cnt file lines
+	int lineCnt = 0;
+
+	// this getline is not the same as the function member we mentioned earlier!
+
+	while(getline(inFStream,line)) {
+		lineCnt++;
+	}
+	cout << "File :: " << inputFile << " has " << lineCnt << " lines." << endl;
+	if (lineCnt == 0) {
+		cout << "Input file is empty!" << endl;
+		return 0;
+	}
+
+	// Now lets rewind file back to 
+	inFStream.clear();
+	inFStream.seekg(0, ios::beg);
+
+	// Lets Read the First Line -- If not what expected this is not a file we expect
+	getline(inFStream,line);
+
+	// C string comparison -- returns 0 when strings are identical (case sensitive)
+	//if ( strcmp (line.c_str(),"NAMESLIST") != 0 ) {
+	// stricmp is the case insensitive equivalent
+	//if ( stricmp (line.c_str(),"NaMeSlIsT") != 0 ) {
+	// C++ way
+	if ( line.compare("NAMESLIST") != 0 ) {
+		cout << "This is not a NamesList File!" << endl;
+		return 0;
+	}
+
+	// Now since this is the file we expected lets put the Names in our Data Structure
+	while(getline(inFStream,line)) {
+		if (line.empty())	// Skip Empty Lines
+			continue;
+
+		vContainer.push_back(line);
+		sContainer.insert(line);
+	}
+
+	return 1;
 }
-*/
