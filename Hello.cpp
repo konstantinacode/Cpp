@@ -1,14 +1,12 @@
-// HelloAgain.cpp : This file contains the 'main' function. Program execution begins and ends there.
-
-/*
-#include "pch.h"
-*/
-
 #include <iostream>
 using namespace std;
 
-int main() {
-	cout << "Hello World!\n" << "(again...)" << endl;
-
+int main(){
+	cout << "My first program\n";
+	cout << "Hello " << "world!" << endl;
+	/*
+	cout << "this is a comment" << endl;
+	cout << "so is this one" << endl;
+	*/
 	return 0;
 }
