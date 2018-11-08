@@ -26,9 +26,12 @@ public:
 		cout << name << ": " << year << endl;
 	}
 	Person(const string& n, unsigned short y);
-	Person() {
+	/*Person(){
 		name = " ";
 		year = 0;
-	}
+	}*/
+	Person() : 
+		name("unspecified"), year(1)
+	{}
 };
 
