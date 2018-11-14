@@ -1,14 +1,11 @@
 #include <iostream>
 #include <string>
-
-#include "Utils.h"
 #include "Demos.h"
 
 using namespace std;
 
-#define STANDARD_IO
+//#define STANDARD_IO
 //#define STRINGS
-//#define SIMPLE_FILE_EXAMPLES
 
 int main (int argc, char *argv[]) {
 #ifdef STANDARD_IO
@@ -47,32 +44,11 @@ int main (int argc, char *argv[]) {
 #elif defined STRINGS
 	string_examples();
 	system("PAUSE");
-#elif defined SIMPLE_FILE_EXAMPLES
+#else defined SIMPLE_FILE_EXAMPLES
 	simpleFileWriteExample ();
 	//simpleReadExample ("testAsciiFile.txt");
 	//readWriteBinaryExample ();
 	system("PAUSE");
-#else
-	if (argc != 2) {
-		cout << "Usage: Lab4.exe input_file" << endl;
-		system("PAUSE");
-		return -1;
-	}
-
-	// Data Structures
-	vector <std::string> vNamesList;
-	// std::set (stores unique elements in a specific order)
-	set <std::string> sNamesList;
-
-	if (!readInputFile (argv[1], vNamesList, sNamesList)) {
-		system("PAUSE");
-		return -1;
-	}
-
-	// Now print the strings contained in Vector
-	printStringVector(vNamesList);
-	// Now print the strings contained in Set
-	printStringSet(sNamesList);
 #endif
 
 	return 0;
