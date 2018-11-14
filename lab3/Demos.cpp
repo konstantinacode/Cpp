@@ -9,6 +9,7 @@
 
 #include "Utils.h"
 
+
 using namespace std;
 
 void string_examples ( void ) {
@@ -141,7 +142,7 @@ void simpleFileWriteExample ( void ) {
 
 		// TODO :: Go to the first line in the file and write your name -- See what happens
 		oFile.seekp(0,ios_base::beg);
-		oFile << "Anthousis Andreadis\n";
+		oFile << "Surname Name\n";
 
 		cout << "Don't forget to close file!\n";
 		// Close the file stream explicitly
@@ -245,7 +246,7 @@ void readWriteBinaryExample ( void ) {
 	char buf[bufSize];
 	file.getline(buf,bufSize);
 
-	if (stricmp(buf,"CUSTOM HEADER FILE") == 0) {
+	if (_stricmp(buf,"CUSTOM HEADER FILE") == 0) {
 		cout << "This is a file of our own custom format!\n";
 
 		// Read how many values we expect to read
@@ -267,57 +268,4 @@ void readWriteBinaryExample ( void ) {
 	}
 
 	file.close();
-}
-
-int readInputFile (char *inputFile, vector<string> &vContainer, set<string> &sContainer) {
-	ifstream inFStream (inputFile);
-	if ( !inFStream.is_open() ){
-		cout <<"Cannot open input file\n";
-		return 0;
-	}
-
-	// Just a string to store read data
-	string line;
-
-	// A simple way to cnt file lines
-	int lineCnt = 0;
-
-	// this getline is not the same as the function member we mentioned earlier!
-
-	while(getline(inFStream,line)) {
-		lineCnt++;
-	}
-	cout << "File :: " << inputFile << " has " << lineCnt << " lines." << endl;
-	if (lineCnt == 0) {
-		cout << "Input file is empty!" << endl;
-		return 0;
-	}
-
-	// Now lets rewind file back to 
-	inFStream.clear();
-	inFStream.seekg(0, ios::beg);
-
-	// Lets Read the First Line -- If not what expected this is not a file we expect
-	getline(inFStream,line);
-
-	// C string comparison -- returns 0 when strings are identical (case sensitive)
-	//if ( strcmp (line.c_str(),"NAMESLIST") != 0 ) {
-	// stricmp is the case insensitive equivalent
-	//if ( stricmp (line.c_str(),"NaMeSlIsT") != 0 ) {
-	// C++ way
-	if ( line.compare("NAMESLIST") != 0 ) {
-		cout << "This is not a NamesList File!" << endl;
-		return 0;
-	}
-
-	// Now since this is the file we expected lets put the Names in our Data Structure
-	while(getline(inFStream,line)) {
-		if (line.empty())	// Skip Empty Lines
-			continue;
-
-		vContainer.push_back(line);
-		sContainer.insert(line);
-	}
-
-	return 1;
 }
