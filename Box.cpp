@@ -4,7 +4,7 @@ using namespace std;
 class Box {
 private:
 	double height, width, length;
-	static int Quantity;//ôçí áñ÷éêÞ ôéìÞ óôéò static ìåôáâëçôÝò ôçí äßíù Ýîù áðü ôçí ôÜîç
+	static int Quantity;//την αρχική τιμή στις static μεταβλητές την δίνω έξω από την τάξη
 public:
 	double Get_Height() {
 		return height;
