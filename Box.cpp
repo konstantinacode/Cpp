@@ -96,15 +96,15 @@ int main() {
 		Box C[5];
 		cout << C[2].Surface() << endl;
 		cout << "Quant:" << A.Display_Quantity() << endl;
-	}//åäþ ï ôá 5 áíôéêåßìåíá ôïõ ðßíáêá êáôáóôñÝöïíôáé
+	}
 	cout << "Quant:" << A.Display_Quantity() << endl;
 
 	Box *ptrBoxC = new Box;
 	cout << "Surface of Box C: " << ptrBoxC->Surface() << endl;
 	cout << "-----" << B.Display_Quantity() << endl;
 
-	delete ptrBoxC; //äéáãñÜöåé ôçí ðåñéï÷Þ ðïõ äß÷íåé ï pointer ü÷é ï ßäéïò ï pointer
-	ptrBoxC = &A; //ìðïñþ ôïí äåßêôç íá ôïí áíáèÝóù áëëïý
+	delete ptrBoxC; 
+	ptrBoxC = &A; 
 
 	cout << "Surface of Box A: " << ptrBoxC->Surface() << endl;
 	cout << ptrBoxC->Display_Quantity() << endl; 
