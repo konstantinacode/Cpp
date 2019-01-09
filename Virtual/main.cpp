@@ -26,13 +26,14 @@ int main ( int argc, char *argv[] ) {
 
 	// TODO: write some code to invoke the Copy-Constructor of Class LabeledPoint
 	//		 then use modifyLable function to change the third label to "C Label"
-	
+	VF::LabeledPoint C(B);
+	C.modifyLabel(2, "C Label");
 
 	// TODO: Now use a Class Point pointer to take the address of B and call display
-
+	VF::Point * pointer = &B;
+	pointer->display();
 
 	// TODO: Is there a problem in the following code ????(see console output). If how would we fix it???
-	/*
 	VF::Point *E = new VF::LabeledPoint(1,1,"E","Dynamically Allocated Derived Point");
 	((VF::LabeledPoint *)E)->insertLabel("!!!!!!");
 	((VF::LabeledPoint *)E)->insertLabel("------");
@@ -41,10 +42,9 @@ int main ( int argc, char *argv[] ) {
 	E->display();
 	// Dynamically allocated data should be deleted
 	delete E;
-	*/
+	
 
 	cout << endl << "@@@ Virtual Functions Example - END" << endl << endl;
-	system(PAUSE);
 
 #elif defined PURE_VIRTUAL_FUNCTIONS
 	cout << endl << "@@@ Pure Virtual Functions Example - START" << endl << endl;
@@ -70,8 +70,12 @@ int main ( int argc, char *argv[] ) {
 	}
 
 	cout << endl << "@@@ Pure Virtual Functions Example - END" << endl << endl;
+	
 	// Did we forget something?????
+	for (cit = shapeList.begin(); cit != shapeList.end(); ++cit) {
+		delete *cit;
+	}
 #endif
 
-
+	system("pause");
 }
