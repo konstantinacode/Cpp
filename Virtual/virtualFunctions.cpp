@@ -45,8 +45,14 @@ LabeledPoint::LabeledPoint (int newX, int newY, const string &newName, const str
 // Copy-Constructor
 // TODO: Fix the Copy Constructor so that it Performs Deep-Copy instead of Shallow-Copy
 LabeledPoint::LabeledPoint (const LabeledPoint& original)
-	:Point(original), labels(original.labels) {
+	:Point(original) {
 		cout << "\t- " << getName() << " LabeledPoint Copy-Constructor" << std::endl;
+		
+		labels.reserve(original.labels.size());
+		std::vector<string *>::const_iterator it;
+
+		for (it = original.labels.begin(); it != original.labels.end(); ++it)
+			labels.push_back(new std::string(**it));
 }
 
 // Destructor
